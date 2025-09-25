@@ -32,13 +32,32 @@ def download_peru_boundaries():
     data_dir = Path(__file__).parent
     data_dir.mkdir(exist_ok=True)
     
-    # Download from Natural Earth - Admin 1 (Departments/Regions)
-    ne_admin1_url = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip"
+    # Download from Natural Earth - Admin 1 (Departments/Regions) - Fixed URL
+    ne_admin1_url = "https://www.naturalearthdata.com/http/www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip"
+    # Alternative URLs in case the primary fails
+    alt_urls = [
+        "https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_1_states_provinces.zip",
+        "https://github.com/nvkelso/natural-earth-vector/raw/master/10m_cultural/ne_10m_admin_1_states_provinces.zip"
+    ]
+    
     admin1_zip = data_dir / "ne_admin1.zip"
     
     if not admin1_zip.exists():
-        download_file(ne_admin1_url, admin1_zip)
-        extract_zip(admin1_zip, data_dir / "ne_admin1")
+        # Try multiple URLs until one works
+        success = False
+        for url in [ne_admin1_url] + alt_urls:
+            try:
+                download_file(url, admin1_zip)
+                success = True
+                break
+            except Exception as e:
+                print(f"Failed to download from {url}: {e}")
+                continue
+        
+        if not success:
+            print("Could not download from any source. Trying GADM as fallback...")
+        else:
+            extract_zip(admin1_zip, data_dir / "ne_admin1")
     
     # Load and filter for Peru
     admin1_path = data_dir / "ne_admin1" / "ne_10m_admin_1_states_provinces.shp"
