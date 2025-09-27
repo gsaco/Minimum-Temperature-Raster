@@ -140,6 +140,34 @@ def main():
     if not success or data is None:
         st.stop()
     
+    # Sidebar for data input and filters
+    st.sidebar.header("📁 Data Input Options")
+    
+    data_source = st.sidebar.radio(
+        "Choose data source:",
+        ["Use bundled raster", "Upload custom raster"],
+        help="Select whether to use the default Peru temperature raster or upload your own"
+    )
+    
+    if data_source == "Upload custom raster":
+        uploaded_file = st.sidebar.file_uploader(
+            "Upload Temperature Raster (GeoTIFF)",
+            type=['tif', 'tiff'],
+            help="Upload a GeoTIFF file with temperature data. After upload, you would need to rerun the analysis."
+        )
+        
+        if uploaded_file is not None:
+            st.sidebar.success(f"✅ Uploaded: {uploaded_file.name}")
+            # Save uploaded file temporarily for processing
+            temp_path = f"/tmp/{uploaded_file.name}"
+            with open(temp_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            st.sidebar.info("Custom raster uploaded successfully. To analyze this data, please run the notebook with the new raster file.")
+        else:
+            st.sidebar.info("📤 Upload a GeoTIFF file to use custom temperature data")
+    else:
+        st.sidebar.success("✅ Using bundled Peru temperature raster")
+    
     # Sidebar filters
     st.sidebar.header("🔧 Filters and Controls")
     
