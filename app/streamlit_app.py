@@ -229,7 +229,7 @@ def main():
         
         with col1:
             st.subheader("Temperature Distribution")
-            dist_fig = plot_distribution(filtered_data, 'mean', 'Distribution of Mean Minimum Temperatures')
+            dist_fig = plot_distribution(data, 'mean', 'Distribution of Mean Minimum Temperatures')
             st.plotly_chart(dist_fig, use_container_width=True)
         
         with col2:
