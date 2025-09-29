@@ -436,7 +436,7 @@ def main():
     # Footer
     st.markdown("---")
     st.markdown("""
-    **Data Sources:** Peru Minimum Temperature Raster Analysis | **Analysis Level:** Administrative Districts/Departments
+    **Data Sources:** Peru Minimum Temperature Raster Analysis | **Analysis Level:** Administrative Provinces/Departments
     
     **Methodology:** Zonal statistics using rasterstats library | **Risk Classification:** Based on temperature thresholds and percentiles
     """)
