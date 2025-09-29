@@ -145,7 +145,7 @@ docker run -p 8501:8501 peru-tmin-app
 
 ## 🌐 Live Demo
 
-**Streamlit Community Cloud**: [Coming Soon - Deploy Link Here]
+**Streamlit Community Cloud**: https://gsaco-minimum-temperature-raster-appstreamlit-app-9vgrh7.streamlit.app/
 
 > The app includes interactive filters, downloadable data tables, and comprehensive policy recommendations.
 
